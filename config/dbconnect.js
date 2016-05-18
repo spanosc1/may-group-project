@@ -44,7 +44,8 @@ shoppinglist: DB.define('shoppinglist', {
   recipefor: Sequelize.INTEGER,
   recipetitle: Sequelize.TEXT,
   listtobuy: Sequelize.TEXT,
-  totalprice: Sequelize.DECIMAL
+  totalprice: Sequelize.DECIMAL,
+  userid: Sequelize.INTEGER
 })
 
 }
