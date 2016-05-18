@@ -1,0 +1,56 @@
+{{>navbarpartial}}
+
+
+  <!-- Tabbed content: see http://getbootstrap.com/javascript/#tabs -->
+
+  <div class="container">
+  
+  <div class="row">
+  <div class="col-xs-10 col-xs-offset-1 panel panel-body z-depth-2">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" id="myTab">
+    <li role="presentation" class="active"><a href="#recipelist" aria-controls="home" role="tab" data-toggle="tab">My Recipes</a></li>
+    <li role="presentation"><a href="#schedule" aria-controls="profile" role="tab" data-toggle="tab">Weekly Planner</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="recipelist">
+    	<br>
+    	<p> Stored Recipes </p>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="schedule">
+    	<br>
+    	<p> Daily Schedule </p>
+
+    </div>
+  </div>
+  </div> <!-- col-xs-10 end -->
+  </div> <!-- row end -->
+  </div> <!-- container end -->
+  
+
+
+
+
+
+{{>footerpartial}}
+
+ <script type="text/javascript" src="js/jquery.min.js"></script>
+ <script type="text/javascript" src="js/bootstrap.min.js"></script>
+ 
+ <script>
+
+  // Activates tabs on click
+
+  $('#myTab a').click(function(e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+ 
+
+ 
+</script>

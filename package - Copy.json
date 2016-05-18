@@ -1,0 +1,28 @@
+{
+  "name": "group-proj-may",
+  "version": "1.0.0",
+  "description": "Group Project - Meal Planner",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagross66/group-project-2.git"
+  },
+  "author": "Dhaval, Chris, Jeremy, James",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jagross66/group-project-2/issues"
+  },
+  "homepage": "https://github.com/jagross66/group-project-2#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "request": "^2.72.0",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.5"
+  }
+}

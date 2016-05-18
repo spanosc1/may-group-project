@@ -1,0 +1,246 @@
+
+<!-- Modal for logging in -->
+<!-- Boilerplate code, has not been modified -->
+
+<div class="modal fade" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="text-center modal-title">Welcome!</h4>
+      </div>
+      <div class="modal-body">
+      <h6>Enter your email address only if you are already a user.</h6>
+        <form id="loginForm">
+          <label for="myemail">Email address:</label>
+          <input type="email" id="myemail" name="myemail" required>
+          <label for="myname">Name:</label>
+          <input type="text" id="myname" name="myname" required>
+          <label for="mybudgetmax">Weekly food budget ($5-10,1000)</label>
+          <input type="number" id="mybudgetmax" name="mybudgetmax" min="5" max="10000">
+          <label class="form-control"><input type="checkbox" id="usercheck" value=""> I am a New User</label>
+          <button id="loginFormButton" class="btn btn-primary">Log In</button>
+         </form>      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+
+ <!-- Modal for displaying recipe details -->
+
+  <div class="modal" id="recipeModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title text-center">Recipe Details</h4>
+        </div>
+        <div class="modal-body">
+    
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">No Thanks</button>
+          <button type="button" class="btn btn-default" id="storeRecipe">Store Recipe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Modal end -->
+ 
+  {{>navbarpartial}}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row page-content">
+
+      <!-- Blog Sidebar Widgets Column -->
+      <div class="col-md-3">
+        <div class="sidebar">
+          <!-- Subscription widget -->
+          <div class="card-panel">
+            <div class="row">
+              <form class="col-md-12" id="search">
+                <h5>Start Building Your Meal Plan Now</h5>
+                <h6>Search through our database of 1,000,000,000 recipes to begin.</h6>
+                <div class="input-field">
+                  <i class="material-icons prefix">shopping_basket</i>
+                  <input id="icon_prefix" type="text" class="validate">
+                  <label for="icon_prefix">Recipe Keywords</label>
+                </div>
+               
+              <div class="text-center">
+                <button type="submit" class="btn btn-info waves-effect waves-light">Get Started</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!--/.Subscription widget -->
+          <br>
+          <!-- Category widget -->
+          <div class="collection">
+            <a href="#!" class="collection-item">Category 1</a>
+            <a href="#!" class="collection-item active">Category 1</a>
+            <a href="#!" class="collection-item">Category 1</a>
+            <a href="#!" class="collection-item">Category 1</a>
+            <a href="#!" class="collection-item">Category 1</a>
+            <a href="#!" class="collection-item">Category 1</a>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-9">
+
+
+
+        <!-- carousel -->
+        <div id="carousel-example-generic" class="carousel slide carousel-fade">
+
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+            </li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+
+            <!-- First slide -->
+            <div class="item active">
+              <div class="carousel-caption">
+                <div data-animation="animated fadeInRightBig">
+                  <h3 class="h3-responsive">You can make this with food.</h3>
+                  <h5 class="h5-responsive">Wow!</h5>
+                </div>
+
+              </div>
+            </div>
+            <!-- /.item -->
+
+            <!-- Second slide -->
+            <div class="item">
+              <div class="carousel-caption">
+                <div data-animation="animated fadeInDownBig">
+                  <h3 class="h3-responsive">This is a real picture.</h3>
+                  <h5 class="h5-responsive">Yum!</h5>
+                </div>
+
+              </div>
+            </div>
+            <!-- /.item -->
+
+            <!-- Third slide -->
+            <div class="item">
+              <div class="carousel-caption">
+                <div data-animation="animated fadeInLeftBig">
+                  <h3 class="h3-responsive">You can make this for one dollar.</h3>
+                  <h5 class="h5-responsive">Amazing!</h5>
+                </div>
+              </div>
+            </div>
+            <!-- /.item -->
+
+             <!-- Fourth slide -->
+            <div class="item">
+              <div class="carousel-caption">
+                <div data-animation="animated fadeInLeftBig">
+                  <h3 class="h3-responsive">This isn't borscht from a jar.</h3>
+                  <h5 class="h5-responsive">Definitely not!</h5>
+                </div>
+              </div>
+            </div>
+            <!-- /.item -->
+
+          </div>
+          <!-- /.carousel-inner -->
+
+          <!-- Controls -->
+          <a class="left carousel-control new-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="fa fa fa-angle-left waves-effect waves-light"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control new-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="fa fa fa-angle-right waves-effect waves-light"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+
+        </div>
+        <!-- /.carousel -->
+
+        <!-- Page Features -->
+        
+        <div class="row text-center" id="recipesHere">
+        
+          <!-- /.col-md-4 -->
+        {{#if recipeSearch}}
+        {{#each recipeArray}}
+         
+          <div class="col-md-4 recipes">
+            <div class="card hoverable">
+              <div class="card-image" style="height: 200px;">
+                <img class="img-responsive" style="max-height: 180px;" src="https://spoonacular.com/recipeImages/{{this.image}}">
+              </div>
+              <div class="card-content" style="height: 175px;" data-recipeid={{this.id}} data-recipetitle="{{this.title}}">
+                  <h5><strong>Recipe Number {{@index}}</strong></h5>
+                <p>{{this.title}}</p>
+                <p>Takes {{this.readyInMinutes}} minutes to make.</p>
+              </div>
+              <div class="card-action">
+                <button type="button" class="btn btn-default waves-effect waves-light recipeBut">View Recipe</button>
+              </div>
+            </div>
+
+          </div>
+        {{/each}}
+        {{/if}}
+        </div>
+        <!-- /.row -->
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+  <div class="container">
+
+    <hr>
+
+  </div>
+  <!-- /.container -->
+
+
+  {{>footerpartial}}
+
+
+
+  <!-- SCRIPTS -->
+
+  <!-- JQuery -->
+  <!-- PS, the template originally came with an old
+  version of jquery (1.1.2?).  I updated it to use ver. 2.2.3 -->
+  <!-- I mention this in case it causes an unexpected bug -->
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+  <!-- Material Design Bootstrap -->
+  <script type="text/javascript" src="js/mdb.js"></script>
+
+  <!-- Our index.js file -->
+
+  <script type="text/javascript" src="js/index.js"></script>
