@@ -98,6 +98,26 @@ app.get("/", function(req, res){
 
 })
 
+.post("/storerecipe", function(req, res){
+
+
+var Recipe= DB.recipebox.create('recipe',{
+    // id: 0,
+ 
+    // api_id:    
+    	 
+    // recipe_name: 
+       
+    // ingredients: 
+       
+    // cost: 
+       
+    // calories: 
+});
+
+
+})
+
 .use(function(req, res, next){
 
 	res.redirect("/");
