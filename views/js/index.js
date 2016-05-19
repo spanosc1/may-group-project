@@ -172,22 +172,6 @@ $(document).ready(function() {
 
     }
 
-    // function storeRecipe() {
-
-    //     $("#storeRecipe").click(function() {
-
-    //         $.post("/storeRecipe", sendobj, function(response) {
-
-
-
-    //         });
-
-    //     });
-
-
-    // }
-
-    // $("#loginModal").modal("show");
     // Click listener: Detect click on recipe card, opens modal (see 
     // function.  
 

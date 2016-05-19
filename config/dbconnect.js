@@ -37,7 +37,9 @@ weekplan: DB.define ('weekplan', {
   user_id: Sequelize.INTEGER,
   week_ending: Sequelize.DATEONLY, // Use Sat as start, Fri as end?
   date: Sequelize.DATEONLY,
-  whichmeal: Sequelize.INTEGER, //0=breakfast, 1=lunch, 2=dinner
+  breakfastflag: Sequelize.BOOLEAN,
+  lunchflag: Sequelize.BOOLEAN,
+  dinnerflag: Sequelize.BOOLEAN,
   recipebox_id: Sequelize.INTEGER
 }, {timestamps: false}),
 

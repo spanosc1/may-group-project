@@ -20,11 +20,25 @@
     <div role="tabpanel" class="tab-pane active" id="recipelist">
     	<br>
     	<p> Stored Recipes </p>
-
+      <div class="row">
+        {{#each myRecipes}}
+             <div class="col-xs-4">
+              <div class="card">
+                <div class="card-block">
+                <ul>
+                  <li>Recipe Name: {{this.recipe_name}}</li>
+                  <li>Cost: {{this.cost}}</li>
+                </ul>
+                </div>
+              </div>
+             </div>
+        {{/each}}  
+      </div>
     </div>
+
     <div role="tabpanel" class="tab-pane" id="schedule">
     	<br>
-    	
+     {{#each dayPlans}}
       <div class="row">
         <div class="col-md-8">
           <div class="card">
@@ -32,145 +46,31 @@
             <div class="card-block">
                 <!--Title-->
                 
-                <h5> <strong> Sunday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
+                <h5> <strong> {{this.date}} </strong> </h5>
+                {{#if dayPlans.breakfastflag}}
+                 <p> Meal: Breakfast </p>
+                {{/if}}
+                {{#if dayPlans.lunchflag}}
+                 <p> Meal: Lunch </p>
+                {{/if}}
+                {{#if dayPlans.dinnerflag}}
+                 <p> Meal: Dinner </p>
+                {{/if}}
 
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> Monday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
             </div>
             <!--/.Card content-->
           </div>
         <!--/.Card-->
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> Tuesday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> Wednesday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> Thursday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> Friday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> Saturday </strong> </h5>
-                <p> Breakfast </p>
-                <br>
-                <p> Lunch </p>
-                <br>
-                <p> Dinner </p>
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  </div> <!-- col-xs-10 end -->
+      {{/each}}
+
+    </div> <!-- end of this tab panel -->
+  </div> <!-- end of tab content div -->
+  </div> <!-- col-xs-12 end -->
   </div> <!-- row end -->
   </div> <!-- container end -->
   
-
-
-
-
-
 {{>footerpartial}}
 
  <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -179,12 +79,11 @@
  <script>
 
   // Activates tabs on click
-
+$(document).ready(function(){
   $('#myTab a').click(function(e) {
     e.preventDefault();
     $(this).tab('show');
   });
- 
+ });
 
- 
 </script>

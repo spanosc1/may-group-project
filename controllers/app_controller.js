@@ -27,9 +27,54 @@ module.exports = function(app) {
 
     })
 
-    .get("/planner", function(req, res) {
+    // Renders weekly meal plan using handlebars into planner.handlebars
+
+    .get("/planner", function (req, res){
 
         res.render("planner");
+    })
+
+    // .get("/planner/:userid/:weekending", function(req, res) {
+    //     // get plan for week ending whatever date (dd-mm-yyyy)
+
+    //     // THIS WON'T WORK -- need to figure out JOINS
+    //     // Or do something bizarre with lodash
+
+    //     myDB.weekplan.findAll({
+    //         where: {
+    //             user_id: req.params.userid,
+    //             week_ending: req.params.weekending
+    //         }
+    //     }).then(function(outerNest) {
+    //         myDB.recipebox.findAll({
+    //             where: {
+    //                 id: response.recipebox_id
+    //             }
+    //         }).then(function(innerNest) {
+    //             res.render("planner", {
+    //                 dayPlans: response,
+    //                 recipeInfo: innerNest
+    //             });
+    //         });
+    //     });
+    // })
+
+    .get("/recipepicker/:userid", function(req, res) {
+
+        myDB.recipebox.findAll({
+            where: {
+                userid: req.params.userid
+            }
+        }).then(function(response) {
+            res.render("planner", {
+                myRecipes: response,
+                dayPlans: {
+                    breakfastflag: 1,
+                    lunchflag: 0,
+                    dinnerflag: 0
+                }
+            });
+        })
     })
 
     .get("/search/:term?", function(req, res) {
@@ -69,7 +114,7 @@ module.exports = function(app) {
         var myname = req.body.myname;
         var myemail = req.body.myemail;
         var mybudgetmax = req.body.mybudgetmax;
-        	console.log("hit!");
+        console.log("hit!");
         myDB.userinfo.create({
             fullname: myname,
             email: myemail,
@@ -91,7 +136,7 @@ module.exports = function(app) {
             }
         }).then(function(usersArray) {
             console.log("usersarray" + usersArray[0]);
-            console.log("user id = "+ usersArray[0].id);
+            console.log("user id = " + usersArray[0].id);
             JSON.stringify(usersArray);
             res.json(usersArray);
         });
@@ -103,18 +148,18 @@ module.exports = function(app) {
 
     .post("/storerecipe/:userid", function(req, res) {
 
-    	var user = req.params.userid;
-    	console.log(req.body.api_id, req.body.recipe_name, req.body.ingredients);
+        var user = req.params.userid;
+        console.log(req.body.api_id, req.body.recipe_name, req.body.ingredients);
         var Recipe = myDB.recipebox.create({
-             api_id: req.body.api_id,
-             recipe_name: req.body.recipe_name,
-             ingredients: req.body.ingredients, 
-             cost: req.body.cost,
-             calories: req.body.calories,
-             userid: user
-        }).then(function(){
-        	console.log("recipe stored.");
-        	res.sendStatus(202);
+            api_id: req.body.api_id,
+            recipe_name: req.body.recipe_name,
+            ingredients: req.body.ingredients,
+            cost: req.body.cost,
+            calories: req.body.calories,
+            userid: user
+        }).then(function() {
+            console.log("recipe stored.");
+            res.sendStatus(202);
         })
 
 
@@ -156,19 +201,19 @@ module.exports = function(app) {
     // Above, we get the list by just searching for any items
     // that are attributable to a user.   
 
-    .post("/addshoplist/:userid", function(req, res){
- 
-    	var user = req.params.userid;
+    .post("/addshoplist/:userid", function(req, res) {
 
-    	var recipeid = req.body.recipefor,
-    		recipetitle = req.body.recipetitle,
-    		list = req.body.list,
-    		totalprice = req.body.totalprice;
+        var user = req.params.userid;
 
-    	myDB.shoppinglist.create({
-            recipefor: recipeid,    //again, this is the spoontacular
-            recipetitle: recipetitle,	//recipe id number.
-            listtobuy : list,
+        var recipeid = req.body.recipefor,
+            recipetitle = req.body.recipetitle,
+            list = req.body.list,
+            totalprice = req.body.totalprice;
+
+        myDB.shoppinglist.create({
+            recipefor: recipeid, //again, this is the spoontacular
+            recipetitle: recipetitle, //recipe id number.
+            listtobuy: list,
             totalprice: totalprice,
             userid: user
         }).then(function() {
