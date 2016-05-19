@@ -96,16 +96,18 @@ $(document).ready(function() {
         // and then send it all to a .post route on the server.
 
         $("#storeRecipe").click(function(){
-          var ingredients = [];
+          var ingredients = '';
           alert("click");
           $(".modal-body li").each(function()
-           { ingredients.push($(this).text()) 
-             console.log($(this).text());
+           { ingredients = ingredients + $(this).text() + ",";
 
           });
+          var ingredList = {
+            'ingredient': ingredients
+          }
+            $.post("/storeRecipe", ingredList, function(response){
 
-        // $.post("/storeRecipe", sendobj, function(response){
-
+            });
         });
 
     }
