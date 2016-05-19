@@ -13,6 +13,8 @@ app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+
+app.use(bodyParser.json()); // for parsing application/json
  
 app.use(methodOverride('_method'));
 

@@ -69,7 +69,7 @@ module.exports = function(app) {
         var myname = req.body.myname;
         var myemail = req.body.myemail;
         var mybudgetmax = req.body.mybudgetmax;
-
+        	console.log("hit!");
         myDB.userinfo.create({
             fullname: myname,
             email: myemail,
@@ -90,7 +90,9 @@ module.exports = function(app) {
                 email: emailgiven
             }
         }).then(function(usersArray) {
-            console.log("usersarray" + usersArray);
+            console.log("usersarray" + usersArray[0]);
+            console.log("user id = "+ usersArray[0].id);
+            JSON.stringify(usersArray);
             res.json(usersArray);
         });
 
@@ -102,22 +104,21 @@ module.exports = function(app) {
     .post("/storerecipe/:userid", function(req, res) {
 
     	var user = req.params.userid;
+    	console.log(req.body.api_id, req.body.recipe_name, req.body.ingredients);
+        var Recipe = myDB.recipebox.create({
+             api_id: req.body.api_id,
+             recipe_name: req.body.recipe_name,
+             ingredients: req.body.ingredients, 
+             cost: req.body.cost,
+             calories: req.body.calories,
+             userid: user
+        }).then(function(){
+        	console.log("recipe stored.");
+        	res.sendStatus(202);
+        })
 
-        var Recipe = DB.recipebox.create('recipe', {
-            // id: 0,
 
-            // api_id:    
 
-            // recipe_name: 
-
-            // ingredients: 
-
-            // cost: 
-
-            // calories: 
-
-            // userid: 
-        });
     })
 
     // Get shopping list for a given user id

@@ -32,7 +32,9 @@ $(document).ready(function() {
                         console.log("User does in fact exist.");
                         sessionStorage.email = useremail;
                         sessionStorage.loggedIn = true;
-                        $("#loginStatus").html("Welcome, " + useremail);
+                        sessionStorage.userId = respond[0].id;
+                        $("#loginStatus").html("Welcome, " + useremail +
+                            "id#" + sessionStorage.userId);
                         $("#loginModal").modal("hide");
 
                     } else {
@@ -57,11 +59,11 @@ $(document).ready(function() {
 
     }
 
-    function clickIngredientModal() {
+    function clickIngredientModal(recipeid, title) {
 
-      var currentItemName = "";
-      var listWithPrices = []
-        // Click listener, deals with ingredient price submission
+        var currentItemName = "";
+        var listWithPrices = []
+            // Click listener, deals with ingredient price submission
 
         $(document).on("submit", ".addPrice", function() {
             alert("ok");
@@ -69,7 +71,7 @@ $(document).ready(function() {
             $(this).off("submit", ".addPrice");
             return false;
         });
-   
+
         // Click listener -- when you click
         // on an ingredient, it is highighted in red, 
         // and then an input box is added dynamically.
@@ -85,7 +87,7 @@ $(document).ready(function() {
                 $(this).css("color", "red");
                 $(this).data("selected", "1");
                 $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
-                
+
             }
 
         });
@@ -95,24 +97,41 @@ $(document).ready(function() {
         // We'll also want to store any purchase costs
         // and then send it all to a .post route on the server.
 
-        $("#storeRecipe").click(function(){
-          var ingredients = [];
-          alert("click");
-          $(".modal-body li").each(function()
-           { ingredients.push($(this).text()) 
-             console.log($(this).text());
+        $("#storeRecipe").click(function() {
+            var ingredients = [];
+            alert("click");
 
-          });
+            $.when(
+            $(".modal-body li").each(function() {
+                ingredients.push($(this).text())
+                console.log($(this).text());
+            })).then(function(){
 
-        // $.post("/storeRecipe", sendobj, function(response){
+            var userId = sessionStorage.userId;
+            ingredients = ingredients.join();
+            // package info to send out to server
 
+            var sendRecipe = {
+                api_id: 10, // temporary value
+                recipe_name: title, // see function arguments list above
+                ingredients: ingredients, // see jquery 'each' function
+                cost: 25, // temporary dummy value
+                calories: 100 // temporary dummy value
+            }
+            alert("ingredients" + sendRecipe.ingredients);
+            // JSON.stringify(sendRecipe);
+            $.post("/storeRecipe/" + userId, sendRecipe, function(response) {
+                alert("recipe sent to server for storage");
+                window.location = "/";
+            });
         });
-
+        });  
+        
     }
 
     function addtoModal(recipeid, title) {
 
-        clickIngredientModal();
+        clickIngredientModal(recipeid, title);
 
         $("#recipeModal .modal-header").html("");
         $("#recipeModal .modal-header").html("<h5 class='text-center'>" + title + "</h5><hr>");
@@ -129,20 +148,20 @@ $(document).ready(function() {
 
     }
 
-    function storeRecipe(){
+    // function storeRecipe() {
 
-      $("#storeRecipe").click(function(){
+    //     $("#storeRecipe").click(function() {
 
-        $.post("/storeRecipe", sendobj, function(response){
-
-
-
-        });
-
-      });
+    //         $.post("/storeRecipe", sendobj, function(response) {
 
 
-    }
+
+    //         });
+
+    //     });
+
+
+    // }
 
     // $("#loginModal").modal("show");
     // Click listener: Detect click on recipe card, opens modal (see 

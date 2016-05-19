@@ -5,30 +5,32 @@ var data = {
 
 // recipes : DB.define('eatbudget', {
 //   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
-//   recipe_name: Sequelize.TEXT,
-//   recipe_text: Sequelize.TEXT, 
-//   ingredients: Sequelize.TEXT,   //We'll json-stringify the list
+//   recipe_name: Sequelize.STRING,
+//   recipe_text: Sequelize.STRING, 
+//   ingredients: Sequelize.STRING,   //We'll json-stringify the list
 //   whichmeal: Sequelize.INTEGER,  //0=breakfast, 1=lunch, 2=dinner
 //   userid: Sequelize.INTEGER, // We may want to add a foreign key
 // }, {timestamps: false}),         
 
 userinfo : DB.define('userinfo', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
-  fullname: Sequelize.TEXT,
-  email: Sequelize.TEXT,
+  fullname: Sequelize.STRING,
+  email: Sequelize.STRING,
   budget: Sequelize.INTEGER 
 }, {timestamps: false}),
 
 recipebox: DB.define('recipebox', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   api_id: Sequelize.INTEGER,
-  recipe_name: Sequelize.TEXT,
-  recipe_text: Sequelize.TEXT,
-  ingredients: Sequelize.TEXT,
+  recipe_name: Sequelize.STRING,
+  recipe_text: Sequelize.STRING,
+  ingredients: Sequelize.STRING,
   cost: Sequelize.DECIMAL,
   calories: Sequelize.INTEGER, 
   userid: Sequelize.INTEGER
 }, {timestamps: false}),
+
+// Re: dateonly SEE http://www.w3schools.com/sql/func_date.asp
 
 weekplan: DB.define ('weekplan', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
@@ -42,8 +44,8 @@ weekplan: DB.define ('weekplan', {
 shoppinglist: DB.define('shoppinglist', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   recipefor: Sequelize.INTEGER,
-  recipetitle: Sequelize.TEXT,
-  listtobuy: Sequelize.TEXT,
+  recipetitle: Sequelize.STRING,
+  listtobuy: Sequelize.STRING,
   totalprice: Sequelize.DECIMAL,
   userid: Sequelize.INTEGER
 })
