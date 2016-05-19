@@ -62,12 +62,14 @@ $(document).ready(function() {
     function clickIngredientModal(recipeid, title) {
 
         var currentItemName = "";
-        var listWithPrices = []
+        var listWithPrices = [];
             // Click listener, deals with ingredient price submission
 
         $(document).on("submit", ".addPrice", function() {
-            alert("ok");
-            $(".addPrice").html("");
+            var theprice = $(".pricebox").val();
+            var listItem = currentItemName +"~"+theprice;
+            listWithPrices.push(listItem);
+            $(".addPrice").remove();
             $(this).off("submit", ".addPrice");
             return false;
         });
@@ -79,14 +81,14 @@ $(document).ready(function() {
 
         $(document).on("click", ".modal-body li", function() {
 
-            currentItemName = $(this).val();
+            currentItemName = $(this).html();
             if ($(this).data("selected") == "1") {
                 $(this).css("color", "black");
                 $(this).data("selected", "0");
             } else {
                 $(this).css("color", "red");
                 $(this).data("selected", "1");
-                $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
+                $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' class='form-control pricebox'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
 
             }
 
@@ -119,11 +121,33 @@ $(document).ready(function() {
                 calories: 100 // temporary dummy value
             }
             alert("ingredients" + sendRecipe.ingredients);
-            // JSON.stringify(sendRecipe);
+            
+            // Step One: Store entire recipe
+
             $.post("/storeRecipe/" + userId, sendRecipe, function(response) {
                 alert("recipe sent to server for storage");
                 window.location = "/";
             });
+
+            // Step Two: Add ingredients needed to purchase
+            // for this recipe to shopping list api endpoint
+
+            var listtobuy = listWithPrices.join();
+
+            var sendList = {
+                    recipefor: sendRecipe.api_id,
+                    recipetitle: sendRecipe.recipe_name,
+                    list: listtobuy,
+                    totalprice: 100, // dummy value
+                    userid: userId // global variable, copy of 
+                                        // sessionstorage    
+            }    
+
+            $.post("/addshoplist/" + userId, sendList, function(response) {
+                alert("ingredient shopping list sent to server for storage");
+                window.location = "/";
+            });
+
         });
         });  
         
