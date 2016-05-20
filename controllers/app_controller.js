@@ -147,10 +147,14 @@ module.exports = function(app) {
                 email: emailgiven
             }
         }).then(function(usersArray) {
-            console.log("usersarray" + usersArray[0]);
-            console.log("user id = " + usersArray[0].id);
-            JSON.stringify(usersArray);
-            res.json(usersArray);
+            if (usersArray[0] == undefined)
+            {
+                res.json(0);   // signals that no matches found  
+            } else {
+                JSON.stringify(usersArray);
+                res.json(usersArray);
+            }
+
         });
 
     })

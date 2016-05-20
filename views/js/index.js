@@ -1,6 +1,24 @@
 $(document).ready(function() {
 
+    if (sessionStorage.email != undefined)
+         {
+        $("#loginStatus").html("Welcome, <style='font-weight:bold;'>" + sessionStorage.email);
+    }
 
+    // scrollButtonListen();
+    // $("scrollButtonDown").hide();
+
+    function scrollButtonListen(){
+
+    $("#scrollButtonDown").click(function(){
+        y= $(window).scrollTop();
+        $(window).animate({
+                scrollTop: $(window).scrollTop(y+400)
+            }, 2000);
+
+    });
+
+    }
 
 
     // ========
@@ -39,7 +57,11 @@ $(document).ready(function() {
 
                     } else {
                         // This needs to be made into something better
-                        alert("User doesn't exist, sorry.  Create a new account.");
+                    
+                        $("#loginAction").html("<h5 style='color:red; padding-bottom: 10px;'>User doesn't exist, sorry. Create a new account.");
+                        setTimeout(function(){
+                            $("#loginAction").html("<h6 style='color:black'>Enter your email address if you are already a user.</h6>");
+                        }, 4000);
 
                     }
 
@@ -246,7 +268,7 @@ $(document).ready(function() {
                 // }
 
                 window.location = "/";
-
+                $("#scrollButtonDown").show();
             });
 
         return false;

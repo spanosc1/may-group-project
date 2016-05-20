@@ -64,3 +64,10 @@ footer.page-footer a {
 color: #fff;
 font-size: 15px;
 }
+
+#scrollButtonDown {
+    display: none;
+    position: fixed; 
+    bottom: 50%; 
+    left: 25%; }
+}

@@ -2,6 +2,8 @@
 <!-- Modal for logging in -->
 <!-- Boilerplate code, has not been modified -->
 
+<button id="scrollButtonDown" class="scrollButton btn btn-lg btn-danger">X</button>
+
 <div class="modal fade" id="loginModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -10,7 +12,7 @@
         <h4 class="text-center modal-title">Welcome!</h4>
       </div>
       <div class="modal-body" >
-      <h6>Enter your email address only if you are already a user.</h6>
+      <h6 id="loginAction">Enter your email address if you are already a user.</h6>
         <form id="loginForm" method="POST" action="/adduser">
           <label for="myemail">Email address:</label>
           <input type="email" id="myemail" name="myemail" required>
@@ -106,15 +108,6 @@
           </div>
           <!--/.Subscription widget -->
           <br>
-          <!-- Category widget -->
-          <div class="collection">
-            <a href="#!" class="collection-item">Category 1</a>
-            <a href="#!" class="collection-item active">Category 1</a>
-            <a href="#!" class="collection-item">Category 1</a>
-            <a href="#!" class="collection-item">Category 1</a>
-            <a href="#!" class="collection-item">Category 1</a>
-            <a href="#!" class="collection-item">Category 1</a>
-          </div>
 
         </div>
       </div>
@@ -204,9 +197,19 @@
         <!-- Page Features -->
         
         <div class="row text-center" id="recipesHere">
-        
-          <!-- /.col-md-4 -->
         {{#if recipeSearch}}
+        {{#unless recipeArray}}
+          <div class="row">
+          <div class="col-xs-4 col-xs-offset-4 panel panel-body">
+            <h2>Sorry, No Results Returned.</h2>
+          </div>
+          </div>
+        {{/unless}}
+        {{/if}}
+
+
+        {{#if recipeSearch}}
+       
         {{#each recipeArray}}
          
           <div class="col-md-4 recipes">
@@ -267,11 +270,5 @@
   <!-- Our index.js file -->
 
   <script type="text/javascript" src="js/index.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-
-  <script>
-  x = setTimeout(function() 
-   {new WOW.init();}
-   , 1000);
   
-  </script>
+
