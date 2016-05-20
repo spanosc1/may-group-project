@@ -173,7 +173,7 @@
     alert("response = "+gotBack[0].recipe_name);
 
     for (i in gotBack){
-      var outerHtml = "<div class='col-xs-4'><div class='panel panel-body'>"
+      var outerHtml = "<div class='col-xs-4'><div class='card hoverable'><div class='card-content'>";
       var text ="<h3>"+ gotBack[i].recipe_name+"</h3><br><h5>Designated Date: "+gotBack[i].date+"</h5><br>";
       var closingTags = "</div></div>";
       $(".eatThese").append(outerHtml+text+closingTags);

@@ -37,14 +37,31 @@ module.exports = function(app) {
 
     .get("/planner/:userid/:weekstart", function(req, res) {
         // get plan for week beginning whatever date (Monday)
-        var userid=1;
-        var weekstart = "05-20-2016";
-        console.log(new Date());
+
+        // weekstart must be formatted as mm-dd-yyyy
+
+        //TESTING PURPOSES ONLY ---
+        req.params.userid=1;
+        var weekstart = "04-10-2016";
+        // ----
+
+        // Searches for a one week period only, 
+        // based on start date
+               
+        var startDate = new Date(weekstart);
+        var endDate = new Date(weekstart);
+
+        endDate.setDate(startDate.getDate()+6);
+
+        console.log("start date = "+startDate);
+        console.log("end date="+endDate);
+         
         myDB.recipebox.findAll({
             where: {
                 userid: req.params.userid,
                 date: {
-                    $gte: new Date()
+                    $gte: startDate,
+                    $lte: endDate
                 }
             }
         }).then(function(response) {
