@@ -40,19 +40,19 @@ $(document).ready(function() {
             console.log(checkifUser);
 
             var useremail = $("#myemail").val().trim();
+            $("#myemail").val("");
 
             if (!checkifUser) { // Verify that user exists if checkbox NOT checked ... 
                 console.log(useremail);
                 $.post("/verifyuser/" + useremail, function(respond) {
-                    alert("got back: " + respond + respond.length);
+                    
                     if (respond.length > 0) {
 
                         console.log("User does in fact exist.");
                         sessionStorage.email = useremail;
                         sessionStorage.loggedIn = true;
                         sessionStorage.userId = respond[0].id;
-                        $("#loginStatus").html("Welcome, " + useremail +
-                            "id#" + sessionStorage.userId);
+                        $("#loginStatus").html("Welcome, " + useremail);
                         $("#loginModal").modal("hide");
 
                     } else {
@@ -130,7 +130,7 @@ $(document).ready(function() {
                     }
                     else
                     {
-                        alert("price found for "+currentItemName+" = "+response);
+                        console.log("price found for "+currentItemName+" = "+response);
                         var theprice = response;
                         totalShopCost += theprice;
                         // stored in mysql as item~price
@@ -149,7 +149,7 @@ $(document).ready(function() {
  
         $("#storeRecipe").click(function() {
             var ingredients = [];
-            alert("click");
+           
 
             $.when(
             $(".modal-body li").each(function() {
@@ -159,7 +159,7 @@ $(document).ready(function() {
             
             var meal = $("#meal").val();
             var whichdate = $("#whichdate").val();
-            alert("meal#= "+meal);
+         
             var userId = sessionStorage.userId;
             ingredients = ingredients.join();
             // package info to send out to server
@@ -174,12 +174,12 @@ $(document).ready(function() {
                 date: whichdate,
                 meal: meal
             }
-            alert("ingredients" + sendRecipe.ingredients);
+             
 
             // Step One: Store entire recipe
 
             $.post("/storeRecipe/" + userId, sendRecipe, function(response) {
-                alert("recipe sent to server for storage");
+                
                 window.location = "/";
             });
 
@@ -198,7 +198,7 @@ $(document).ready(function() {
             }    
 
             $.post("/addshoplist/" + userId, sendList, function(response) {
-                alert("ingredient shopping list sent to server for storage");
+               
                 window.location = "/";
             });
 
