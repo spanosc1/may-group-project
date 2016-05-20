@@ -76,7 +76,7 @@
     	<br>
     	<p> Stored Recipes </p>
       <div class="row">
-          <div class="recipeHere"></div>
+          <div class="shopHere"></div>
       </div>
     </div>
 
@@ -151,7 +151,57 @@
     $(this).tab('show');
   });
 
+  
+  populateShoplist();
   populatePlan();
+  
+
+  function populateShoplist(){
+    
+   var userId = 1; // for testing ONLY
+  
+  $.get("/getshoplist/"+userId, function(gotBack){
+     
+    var listBuy;
+     
+
+    for (i in gotBack){
+    
+    var costAddup = 0;
+
+       if (gotBack[i].listtobuy)
+      {
+        listBuy = gotBack[i].listtobuy.split(",");
+      } else continue;
+
+      var outerHtml = "<div class='col-xs-4'><div class='card hoverable'><div class='card-content'>";
+      var text ="<h3>"+ gotBack[i].recipetitle+"</h3><br>";
+
+      for (ii=0; ii < listBuy.length; ii++){
+
+        if (listBuy[ii].indexOf("~" != -1)){
+          tildeSplit = listBuy[ii].split("~");
+        } else continue;
+
+        text += "<li>"+tildeSplit[0]+" : $"+tildeSplit[1]+"</li>";
+        if (typeof tildeSplit[1] != "string"){
+          tildeSplit[1] = 0;
+        }
+        costAddup += Number(tildeSplit[1]);
+
+      }
+
+      var closingTags = "</div></div>";
+      var costTotal = "<br>- - - - -<br><p>Total Cost: "+costAddup+"</p>";
+
+      $(".shopHere").append(outerHtml+text+costTotal+closingTags);
+      
+    }
+
+
+  });
+
+  }
 
   // populate planner tab with meal info for user
 
@@ -168,9 +218,7 @@
 // iterate over each position in array of objects, ie, each
 // row in the table matching date and user id
     var gotBack = response;
-    alert(gotBack.length);
-    alert(gotBack);
-    alert("response = "+gotBack[0].recipe_name);
+     
 
     for (i in gotBack){
       var outerHtml = "<div class='col-xs-4'><div class='card hoverable'><div class='card-content'>";
