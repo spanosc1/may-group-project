@@ -137,9 +137,7 @@ module.exports = function(app) {
 
     })
 
-    // Store recipe in user's 'recipe box'
-    // (Not completed)
-
+ 
     .post("/storerecipe/:userid", function(req, res) {
 
         var user = req.params.userid;
@@ -172,13 +170,31 @@ module.exports = function(app) {
             console.log("recipe stored.");
             res.sendStatus(202);
         })
+ })
 
-
-
+    .get("/ingredientPrice", function(req, res) {
+        var ingredient = req.body.ingredient
+        var ingredID = "";
+        var price = "";
+        //gets the id of the product needed for each ingredient
+        request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/search?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ&number=10&offset=0&query=' + ingredient, function(error, response, body) {
+           if (error) {
+                res.sendStatus(204);
+            } else {
+                ingredID = JSON.parse(body).products[0].id;
+                //gets the price of the products
+                request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/' + ingredID + '?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ', function(error, response, body) {
+                    if(error) {
+                        res.sendStatus(204);
+                    } else {
+                        price = JSON.parse(body).price;
+                        res.json(price);
+                    }
+                });
+            }
+        });
     })
-
-    // Get shopping list for a given user id
-
+ 
     .get("/getshoplist/:userid", function(req, res) {
 
         //userid will be the person's id in userinfo table

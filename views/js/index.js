@@ -61,12 +61,15 @@ $(document).ready(function() {
 
     function clickIngredientModal(recipeid, title) {
 
-        var currentItemName = "";
-        var listWithPrices = [];
-            // Click listener, deals with ingredient price submission
+      var currentItemName = "";
+      var listWithPrices = [];
+      var totalShopCost = 0;
+        
+        // Click listener, deals with ingredient price submission
 
         $(document).on("submit", ".addPrice", function() {
             var theprice = $(".pricebox").val();
+            var totalShopCost += theprice;
             var listItem = currentItemName +"~"+theprice;
             listWithPrices.push(listItem);
             $(".addPrice").remove();
@@ -81,17 +84,39 @@ $(document).ready(function() {
 
         $(document).on("click", ".modal-body li", function() {
 
+            
+            //tries to add the name of the ingredient you clicked on, for now it is always zero
             currentItemName = $(this).html();
+
             if ($(this).data("selected") == "1") {
                 $(this).css("color", "black");
                 $(this).data("selected", "0");
             } else {
                 $(this).css("color", "red");
                 $(this).data("selected", "1");
-                $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' class='form-control pricebox'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
 
+                // GET to see if price for ingredient is available
+                // in spoonacular API
+
+                 $.get("/ingredientPrice", currentItemName, function(response){
+                    //if no price is found for a product, prompt the user for what they think the price might be
+                    if(response == null || response == undefined)
+                    {  
+                         // got rid of 'pricebox' class 
+                        $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' id='yourPrice' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
+                        // ingredObj.price = prompt("Enter price for " + ingredObj.ingredient);
+                    }
+                    else
+                    {
+                        alert("price found for "+currentItemName+" = "+response);
+                        var theprice = response;
+                        totalShopCost += theprice;
+                        // stored in mysql as item~price
+                        var listItem = currentItemName +"~"+theprice;
+                        listWithPrices.push(listItem);
+                    }
+                });
             }
-
         });
 
         // On clicking 'store recipe', this will extract all of
@@ -99,6 +124,7 @@ $(document).ready(function() {
         // We'll also want to store any purchase costs
         // and then send it all to a .post route on the server.
 
+ 
         $("#storeRecipe").click(function() {
             var ingredients = [];
             alert("click");
@@ -121,13 +147,13 @@ $(document).ready(function() {
                 api_id: 10, // temporary value
                 recipe_name: title, // see function arguments list above
                 ingredients: ingredients, // see jquery 'each' function
-                cost: 25, // temporary dummy value
+                cost: totalShopCost, // temporary dummy value
                 calories: 100, // temporary dummy value
                 date: whichdate,
                 meal: meal
             }
             alert("ingredients" + sendRecipe.ingredients);
-            
+
             // Step One: Store entire recipe
 
             $.post("/storeRecipe/" + userId, sendRecipe, function(response) {
@@ -139,7 +165,7 @@ $(document).ready(function() {
             // for this recipe to shopping list api endpoint
 
             var listtobuy = listWithPrices.join();
-
+ 
             var sendList = {
                     recipefor: sendRecipe.api_id,
                     recipetitle: sendRecipe.recipe_name,
