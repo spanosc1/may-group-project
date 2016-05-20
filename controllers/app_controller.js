@@ -29,9 +29,10 @@ module.exports = function(app) {
 
     // Renders weekly meal plan using handlebars into planner.handlebars
 
-    .get("/test", function(req, res) {
+    .get("/planpage", function(req, res) {
 
-        res.render("planner3");
+        res.sendFile(path.join(__dirname+"/../views/planpage.html"));
+        
     })
 
     .get("/planner/:userid/:weekstart", function(req, res) {
@@ -47,9 +48,7 @@ module.exports = function(app) {
                 }
             }
         }).then(function(response) {
-            // res.render("planner", {dayPlans: response});
-            res.render("planner3");
-            console.log("response for date range: " + response);
+           res.json(response);  
         });
     })
 

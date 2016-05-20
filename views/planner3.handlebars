@@ -21,49 +21,17 @@
     	<br>
     	<p> Stored Recipes </p>
       <div class="row">
-        {{#each myRecipes}}
-             <div class="col-xs-4">
-              <div class="card">
-                <div class="card-block">
-                <ul>
-                  <li>Recipe Name: {{this.recipe_name}}</li>
-                  <li>Cost: {{this.cost}}</li>
-                </ul>
-                </div>
-              </div>
-             </div>
-        {{/each}}  
+          <div class="recipeHere"></div>
       </div>
     </div>
 
     <div role="tabpanel" class="tab-pane" id="schedule">
     	<br>
-     {{#each dayPlans}}
-      <div class="row">
-        <div class="col-md-8">
-          <div class="card">
-            <!--Card content-->
-            <div class="card-block">
-                <!--Title-->
-                
-                <h5> <strong> {{this.date}} </strong> </h5>
-                {{#if dayPlans.breakfastflag}}
-                 <p> Meal: Breakfast </p>
-                {{/if}}
-                {{#if dayPlans.lunchflag}}
-                 <p> Meal: Lunch </p>
-                {{/if}}
-                {{#if dayPlans.dinnerflag}}
-                 <p> Meal: Dinner </p>
-                {{/if}}
+      
+        Blank
 
-            </div>
-            <!--/.Card content-->
-          </div>
-        <!--/.Card-->
-        </div>
-      </div>
-      {{/each}}
+
+
 
     </div> <!-- end of this tab panel -->
   </div> <!-- end of tab content div -->
