@@ -49,7 +49,7 @@ module.exports = function(app) {
         }).then(function(response) {
             // res.render("planner", {dayPlans: response});
             res.render("planner3");
-            console.log("response for date range: "+ response);
+            console.log("response for date range: " + response);
         });
     })
 
@@ -137,7 +137,7 @@ module.exports = function(app) {
 
     })
 
- 
+
     .post("/storerecipe/:userid", function(req, res) {
 
         var user = req.params.userid;
@@ -170,90 +170,100 @@ module.exports = function(app) {
             console.log("recipe stored.");
             res.sendStatus(202);
         })
- })
+    })
 
-    .get("/ingredientPrice", function(req, res) {
-        var ingredient = req.body.ingredient
-        var ingredID = "";
-        var price = "";
-        //gets the id of the product needed for each ingredient
-        request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/search?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ&number=10&offset=0&query=' + ingredient, function(error, response, body) {
-           if (error) {
-                res.sendStatus(204);
-            } else {
-                ingredID = JSON.parse(body).products[0].id;
-                //gets the price of the products
-                request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/' + ingredID + '?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ', function(error, response, body) {
-                    if(error) {
+    .get("/ingredientPrice/:ingredient", function(req, res) {
+            var ingredient = req.params.ingredient;
+            console.log("Ingredient search for: "+ ingredient);
+            var ingredID = "";
+            var price = "";
+            //gets the id of the product needed for each ingredient
+            request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/search?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ&number=10&offset=0&query=' + ingredient, function(error, response, body) {
+                    if (error) {
                         res.sendStatus(204);
                     } else {
-                        price = JSON.parse(body).price;
-                        res.json(price);
+                        returnData = JSON.parse(body);
+                        console.log("returndata = "+ returnData);
+                        if (returnData.products[0] != undefined) {
+                            ingredID = returnData.products[0].id;
+                            console.log("ingred id="+ingredID);
+                       
+
+                        //gets the price of the products
+                        request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/' + ingredID + '?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ', function(error, response, body) {
+                            if (error) {
+                                res.sendStatus(204);
+                            } else {
+                                price = JSON.parse(body).price;
+                                res.json(price);
+                            }
+                        });
+                        } else {
+                            res.json(0);
+                        }
                     }
-                });
-            }
-        });
-    })
- 
-    .get("/getshoplist/:userid", function(req, res) {
-
-        //userid will be the person's id in userinfo table
-
-        var user = req.params.userid;
-
-        myDB.shoppinglist.findAll({
-            where: {
-                userid: user
-            }
-        }).then(function(listArray) {
-            console.log("shopping list items: " + listArray);
-            res.json(listArray);
-            // Array of objects will contain
-            // every row in the shoppinglist table
-            // attributable to the user selected.
-            // In other words, their current shopping list.
-            // Each position in the array correponds to one recipe
-            // that was chosen by the user.
-
-        });
-
-
+            });
     })
 
-    // Takes form data / data submitted via ajax post
-    // and parses it (as req.body), then puts data into
-    // shopping list table.  Each row in the table is
-    // attributable to one recipe, one user. 
-    //
-    // Above, we get the list by just searching for any items
-    // that are attributable to a user.   
+.get("/getshoplist/:userid", function(req, res) {
 
-    .post("/addshoplist/:userid", function(req, res) {
+    //userid will be the person's id in userinfo table
 
-        var user = req.params.userid;
+    var user = req.params.userid;
 
-        var recipeid = req.body.recipefor,
-            recipetitle = req.body.recipetitle,
-            list = req.body.list,
-            totalprice = req.body.totalprice;
-
-        myDB.shoppinglist.create({
-            recipefor: recipeid, //again, this is the spoontacular
-            recipetitle: recipetitle, //recipe id number.
-            listtobuy: list,
-            totalprice: totalprice,
+    myDB.shoppinglist.findAll({
+        where: {
             userid: user
-        }).then(function() {
-            res.redirect("/"); // ??
-        });
-
-    })
-
-    .use(function(req, res, next) {
-
-        res.redirect("/");
-        next();
+        }
+    }).then(function(listArray) {
+        console.log("shopping list items: " + listArray);
+        res.json(listArray);
+        // Array of objects will contain
+        // every row in the shoppinglist table
+        // attributable to the user selected.
+        // In other words, their current shopping list.
+        // Each position in the array correponds to one recipe
+        // that was chosen by the user.
 
     });
+
+
+})
+
+// Takes form data / data submitted via ajax post
+// and parses it (as req.body), then puts data into
+// shopping list table.  Each row in the table is
+// attributable to one recipe, one user. 
+//
+// Above, we get the list by just searching for any items
+// that are attributable to a user.   
+
+.post("/addshoplist/:userid", function(req, res) {
+
+    var user = req.params.userid;
+
+    var recipeid = req.body.recipefor,
+        recipetitle = req.body.recipetitle,
+        list = req.body.list,
+        totalprice = req.body.totalprice;
+
+    myDB.shoppinglist.create({
+        recipefor: recipeid, //again, this is the spoontacular
+        recipetitle: recipetitle, //recipe id number.
+        listtobuy: list,
+        totalprice: totalprice,
+        userid: user
+    }).then(function() {
+        res.redirect("/"); // ??
+    });
+
+})
+
+.use(function(req, res, next) {
+
+    res.redirect("/");
+    next();
+
+});
 
 };

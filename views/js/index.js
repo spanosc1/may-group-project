@@ -69,7 +69,7 @@ $(document).ready(function() {
 
         $(document).on("submit", ".addPrice", function() {
             var theprice = $(".pricebox").val();
-            var totalShopCost += theprice;
+            totalShopCost += theprice;
             var listItem = currentItemName +"~"+theprice;
             listWithPrices.push(listItem);
             $(".addPrice").remove();
@@ -98,9 +98,9 @@ $(document).ready(function() {
                 // GET to see if price for ingredient is available
                 // in spoonacular API
 
-                 $.get("/ingredientPrice", currentItemName, function(response){
+                 $.get("/ingredientPrice/"+currentItemName, function(response){
                     //if no price is found for a product, prompt the user for what they think the price might be
-                    if(response == null || response == undefined)
+                    if(response == null || response == undefined || response == 0)
                     {  
                          // got rid of 'pricebox' class 
                         $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' id='yourPrice' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
