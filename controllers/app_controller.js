@@ -37,8 +37,8 @@ module.exports = function(app) {
 
     .get("/planner/:userid/:weekstart", function(req, res) {
         // get plan for week beginning whatever date (Monday)
-
-        var weekstart = "07-20-2016";
+        var userid=1;
+        var weekstart = "05-20-2016";
         console.log(new Date());
         myDB.recipebox.findAll({
             where: {
@@ -48,7 +48,8 @@ module.exports = function(app) {
                 }
             }
         }).then(function(response) {
-           res.json(response);  
+           console.log(response[0].recipe_name);
+           res.json(response); 
         });
     })
 
@@ -258,11 +259,11 @@ module.exports = function(app) {
 
 })
 
-.use(function(req, res, next) {
+// .use(function(req, res, next) {
 
-    res.redirect("/");
-    next();
+//     res.redirect("/");
+//     next();
 
-});
+// });
 
 };
