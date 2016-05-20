@@ -100,30 +100,27 @@ module.exports = function(app) {
     // (Not completed)
 
     .post("/storeRecipe/:userid?", function(req, res) {
-        var ingredients = req.body.ingredient.split(",");
-        ingredients.splice(ingredients.length - 1, 1);
-        var igredID = '';
-        var prices = [];
-        for(var i = 0; i < ingredients.length; i++)
-        {
-            //gets the id of the product needed for each ingredient
-            request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/search?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ&number=10&offset=0&query=' + ingredients[i], function(error, response, body) {
-                if (error) {
-                    res.sendStatus(204);
-                } else {
-                    ingredID = JSON.parse(body).products[0].id;
-                    //gets the price of the products
-                    request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/' + ingredID + '?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ', function(error, response, body) {
-                        if(error) {
-                            res.sendStatus(204);
-                        } else {
-                            prices.push(JSON.parse(body).price);
-                        }
-
-                    })
-                }
-            });
-        }
+        var ingredient = req.body.ingredient
+        var ingredID = "";
+        var price = "";
+        //gets the id of the product needed for each ingredient
+        request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/search?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ&number=10&offset=0&query=' + ingredient, function(error, response, body) {
+           if (error) {
+                res.sendStatus(204);
+            } else {
+                ingredID = JSON.parse(body).products[0].id;
+                //gets the price of the products
+                request('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/' + ingredID + '?mashape-key=WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ', function(error, response, body) {
+                    if(error) {
+                        res.sendStatus(204);
+                    } else {
+                        price = JSON.parse(body).price;
+                        res.json(price);
+                    }
+                });
+            }
+        });
+    })
     	//var user = req.params.userid;
 
         //var Recipe = DB.recipebox.create('recipe', {
@@ -141,8 +138,6 @@ module.exports = function(app) {
 
             // userid: 
         //});
-
-    })
 
     // Get shopping list for a given user id
 

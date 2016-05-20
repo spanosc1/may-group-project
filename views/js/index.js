@@ -60,11 +60,16 @@ $(document).ready(function() {
     function clickIngredientModal() {
 
       var currentItemName = "";
-      var listWithPrices = []
+      var listWithPrices = [];
+      var ingredObj = {
+        'ingredient': '',
+        'price': ''
+      };
         // Click listener, deals with ingredient price submission
-
         $(document).on("submit", ".addPrice", function() {
-            alert("ok");
+           //sets the price to the price you submit
+            ingredObj.price = $("#yourPrice").val();
+            listWithPrices.push(ingredObj);
             $(".addPrice").html("");
             $(this).off("submit", ".addPrice");
             return false;
@@ -76,15 +81,15 @@ $(document).ready(function() {
         // (See above for 'submit' button behavior)
 
         $(document).on("click", ".modal-body li", function() {
-
-            currentItemName = $(this).val();
+            //tries to add the name of the ingredient you clicked on, for now it is always zero
+            ingredObj.ingredient = $(this).val();
             if ($(this).data("selected") == "1") {
                 $(this).css("color", "black");
                 $(this).data("selected", "0");
             } else {
                 $(this).css("color", "red");
                 $(this).data("selected", "1");
-                $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
+                $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' id='yourPrice' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
                 
             }
 
@@ -96,18 +101,31 @@ $(document).ready(function() {
         // and then send it all to a .post route on the server.
 
         $("#storeRecipe").click(function(){
-          var ingredients = '';
-          alert("click");
+
+          var ingredient = '';
+          //for each ingredient that the user did not click on (those not in red)
           $(".modal-body li").each(function()
-           { ingredients = ingredients + $(this).text() + ",";
+           { 
+            if ($(this).data("selected") != "1") {
+                var ingredObj = {
+                    'ingredient': $(this).text()
+                }
+                $.post("/storeRecipe", ingredObj, function(response){
+                    //if no price is found for a product, prompt the user for what they think the price might be
+                    if(response == null)
+                    {
+                        ingredObj.price = prompt("Enter price for " + ingredObj.ingredient);
+                    }
+                    else
+                    {
+                        ingredObj.price = response;
+                    }
+                    listWithPrices.push(ingredObj);
+                });
+            }
 
           });
-          var ingredList = {
-            'ingredient': ingredients
-          }
-            $.post("/storeRecipe", ingredList, function(response){
 
-            });
         });
 
     }
