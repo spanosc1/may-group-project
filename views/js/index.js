@@ -108,17 +108,23 @@ $(document).ready(function() {
                 ingredients.push($(this).text())
                 console.log($(this).text());
             })).then(function(){
-
+            
+            var meal = $("#meal").val();
+            var whichdate = $("#whichdate").val();
+            alert("meal#= "+meal);
             var userId = sessionStorage.userId;
             ingredients = ingredients.join();
             // package info to send out to server
+
 
             var sendRecipe = {
                 api_id: 10, // temporary value
                 recipe_name: title, // see function arguments list above
                 ingredients: ingredients, // see jquery 'each' function
                 cost: 25, // temporary dummy value
-                calories: 100 // temporary dummy value
+                calories: 100, // temporary dummy value
+                date: whichdate,
+                meal: meal
             }
             alert("ingredients" + sendRecipe.ingredients);
             

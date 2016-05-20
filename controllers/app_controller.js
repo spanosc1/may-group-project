@@ -29,35 +29,29 @@ module.exports = function(app) {
 
     // Renders weekly meal plan using handlebars into planner.handlebars
 
-    .get("/planner", function (req, res){
+    .get("/test", function(req, res) {
 
-        res.render("planner");
+        res.render("planner3");
     })
 
-    // .get("/planner/:userid/:weekending", function(req, res) {
-    //     // get plan for week ending whatever date (dd-mm-yyyy)
+    .get("/planner/:userid/:weekstart", function(req, res) {
+        // get plan for week beginning whatever date (Monday)
 
-    //     // THIS WON'T WORK -- need to figure out JOINS
-    //     // Or do something bizarre with lodash
-
-    //     myDB.weekplan.findAll({
-    //         where: {
-    //             user_id: req.params.userid,
-    //             week_ending: req.params.weekending
-    //         }
-    //     }).then(function(outerNest) {
-    //         myDB.recipebox.findAll({
-    //             where: {
-    //                 id: response.recipebox_id
-    //             }
-    //         }).then(function(innerNest) {
-    //             res.render("planner", {
-    //                 dayPlans: response,
-    //                 recipeInfo: innerNest
-    //             });
-    //         });
-    //     });
-    // })
+        var weekstart = "07-20-2016";
+        console.log(new Date());
+        myDB.recipebox.findAll({
+            where: {
+                userid: req.params.userid,
+                date: {
+                    $gte: new Date()
+                }
+            }
+        }).then(function(response) {
+            // res.render("planner", {dayPlans: response});
+            res.render("planner3");
+            console.log("response for date range: "+ response);
+        });
+    })
 
     .get("/recipepicker/:userid", function(req, res) {
 
@@ -150,13 +144,30 @@ module.exports = function(app) {
 
         var user = req.params.userid;
         console.log(req.body.api_id, req.body.recipe_name, req.body.ingredients);
+        var breakfastflag = false;
+        var lunchflag = false;
+        var dinnerflag = false;
+        console.log("meal = " + req.body.meal);
+
+        if (req.body.meal = 0) {
+            breakfastflag = true;
+        } else if (req.body.meal = 1) {
+            lunchflag = true;
+        } else {
+            dinnerflag = true;
+        }
+
         var Recipe = myDB.recipebox.create({
             api_id: req.body.api_id,
             recipe_name: req.body.recipe_name,
             ingredients: req.body.ingredients,
             cost: req.body.cost,
             calories: req.body.calories,
-            userid: user
+            userid: user,
+            date: req.body.date,
+            breakfastflag: breakfastflag,
+            lunchflag: lunchflag,
+            dinnerflag: dinnerflag
         }).then(function() {
             console.log("recipe stored.");
             res.sendStatus(202);

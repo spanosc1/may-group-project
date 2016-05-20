@@ -27,21 +27,25 @@ recipebox: DB.define('recipebox', {
   ingredients: Sequelize.STRING,
   cost: Sequelize.DECIMAL,
   calories: Sequelize.INTEGER, 
-  userid: Sequelize.INTEGER
+  userid: Sequelize.INTEGER,
+  date: Sequelize.DATEONLY,
+  breakfastflag: Sequelize.BOOLEAN,
+  lunchflag: Sequelize.BOOLEAN,
+  dinnerflag: Sequelize.BOOLEAN
 }, {timestamps: false}),
 
 // Re: dateonly SEE http://www.w3schools.com/sql/func_date.asp
 
-weekplan: DB.define ('weekplan', {
-  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
-  user_id: Sequelize.INTEGER,
-  week_ending: Sequelize.DATEONLY, // Use Sat as start, Fri as end?
-  date: Sequelize.DATEONLY,
-  breakfastflag: Sequelize.BOOLEAN,
-  lunchflag: Sequelize.BOOLEAN,
-  dinnerflag: Sequelize.BOOLEAN,
-  recipebox_id: Sequelize.INTEGER
-}, {timestamps: false}),
+// weekplan: DB.define ('weekplan', {
+//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+//   user_id: Sequelize.INTEGER,
+//   week_ending: Sequelize.DATEONLY, // Use Sat as start, Fri as end?
+//   date: Sequelize.DATEONLY,
+//   breakfastflag: Sequelize.BOOLEAN,
+//   lunchflag: Sequelize.BOOLEAN,
+//   dinnerflag: Sequelize.BOOLEAN,
+//   recipebox_id: Sequelize.INTEGER
+// }, {timestamps: false}),
 
 shoppinglist: DB.define('shoppinglist', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},

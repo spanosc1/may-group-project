@@ -1,5 +1,5 @@
-{{>navbarpartial}}
 
+{{>navbarpartial}}
 
   <!-- Tabbed content: see http://getbootstrap.com/javascript/#tabs -->
 
@@ -7,36 +7,6 @@
   
   <div class="row">
   <div class="col-xs-12 panel panel-body z-depth-2">
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist" id="myTab">
-    <li role="presentation" class="active"><a href="#recipelist" aria-controls="home" role="tab" data-toggle="tab">My Recipes</a></li>
-    <li role="presentation"><a href="#schedule" aria-controls="profile" role="tab" data-toggle="tab">Weekly Planner</a></li>
-  </ul>
-
-  <!-- Tab panes -->
-  
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="recipelist">
-    	<br>
-    	<p> Stored Recipes </p>
-      <div class="row">
-        {{#each myRecipes}}
-             <div class="col-xs-4">
-              <div class="card">
-                <div class="card-block">
-                <ul>
-                  <li>Recipe Name: {{this.recipe_name}}</li>
-                  <li>Cost: {{this.cost}}</li>
-                </ul>
-                </div>
-              </div>
-             </div>
-        {{/each}}  
-      </div>
-    </div>
-
-    <div role="tabpanel" class="tab-pane" id="schedule">
     	<br>
      {{#each dayPlans}}
       <div class="row">
@@ -65,25 +35,21 @@
       </div>
       {{/each}}
 
-    </div> <!-- end of this tab panel -->
-  </div> <!-- end of tab content div -->
   </div> <!-- col-xs-12 end -->
   </div> <!-- row end -->
   </div> <!-- container end -->
   
 {{>footerpartial}}
 
- <script type="text/javascript" src="js/jquery.min.js"></script>
- <script type="text/javascript" src="js/bootstrap.min.js"></script>
- 
- <script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
 
-  // Activates tabs on click
-$(document).ready(function(){
-  $('#myTab a').click(function(e) {
-    e.preventDefault();
-    $(this).tab('show');
-  });
- });
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-</script>
+  <!-- Material Design Bootstrap -->
+  <script type="text/javascript" src="js/mdb.js"></script>
+
+  <!-- Our index.js file -->
+
+  <script type="text/javascript" src="js/index.js"></script>
+
