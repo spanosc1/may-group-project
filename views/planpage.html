@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Material Design Bootstrap Template</title>
+  <title>Meal Planning</title>
 
   <!-- Material Design Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -74,8 +74,19 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="recipelist">
     	<br>
-    	<p> Stored Recipes </p>
+    	<div class="row">
+        <div class="col-xs-3"><h5>My Shopping List</h5></div>
+        <div class="col-xs-3 col-xs-offset-5">
+          <button class="btn btn-primary btn-lg waves-effect" id="sendNodemail">Email</button>
+        </div>
+      </div>
+
+      <div class="container row">
+        <hr>
+      </div>
+      
       <div class="row">
+      <br>
           <div class="shopHere"></div>
       </div>
     </div>
@@ -151,9 +162,28 @@
     $(this).tab('show');
   });
 
-  
+  var currentShoplistHTML;
+  var currentShoplistTEXT;
+
   populateShoplist();
   populatePlan();
+  sendEmailButton();
+
+
+  function sendEmailButton(){
+
+  $("#sendNodemail").click(function(){
+    $(this).html("Sending to "+sessionStorage.email);
+    var self = $(this);
+
+    $.post("/emaillist/"+sessionStorage.email, {list: currentShoplistHTML}, function(response){
+        self.html("sent");
+        self.attr("disabled", true);
+    });
+    
+  })
+
+ }
   
 
   function populateShoplist(){
@@ -164,7 +194,6 @@
      
     var listBuy;
      
-
     for (i in gotBack){
     
     var costAddup = 0;
@@ -193,8 +222,10 @@
 
       var closingTags = "</div></div>";
       var costTotal = "<br>- - - - -<br><p>Total Cost: "+costAddup+"</p>";
+      var htmlOut = outerHtml + text + costTotal + closingTags;
+      currentShoplistHTML += htmlOut+"<br><hr><br>";
 
-      $(".shopHere").append(outerHtml+text+costTotal+closingTags);
+      $(".shopHere").append(htmlOut);
       
     }
 
@@ -219,6 +250,7 @@
 // row in the table matching date and user id
     var gotBack = response;
      
+
 
     for (i in gotBack){
       var outerHtml = "<div class='col-xs-4'><div class='card hoverable'><div class='card-content'>";

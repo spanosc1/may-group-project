@@ -1,10 +1,11 @@
-var express = require("express");
-var request = require("request");
-var path = require("path");
-var _ = require("lodash");
-var key = 'WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ';
-var bodyParser = require("body-parser");
-var myDB = require("../config/dbconnect");
+var express = require("express"),
+    request = require("request"),
+    nodemailer = require('nodemailer'),
+    path = require("path"),
+    _ = require("lodash"),
+    key = 'WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ',
+    bodyParser = require("body-parser"),
+    myDB = require("../config/dbconnect");
 
 // myDB.recipes = recipes table, myDB.userinfo = users table
 
@@ -276,11 +277,36 @@ module.exports = function(app) {
 
 })
 
-// .use(function(req, res, next) {
+.post("/emaillist/:emailadd", function(req, res){
 
-//     res.redirect("/");
-//     next();
+    var transporter = nodemailer.createTransport('smtps://eathottrash%40gmail.com:duke3799@smtp.gmail.com');
 
-// });
+    req.params.emailadd="jagross66@gmail.com"
+    console.log(req.body.list+"=list");
+    var mailOptions = {
+            from: '"Yourself" <eathottrash@gmail.com>', // sender address
+            to: req.params.emailadd, // list of receivers
+            subject: 'Your Shopping List', // Subject line
+            text: req.body.list, // plaintext body
+            html: req.body.list // html body
+        };
+
+     transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+            res.json(1);
+        });
+
+})
+
+.use(function(req, res, next) {
+
+    res.redirect("/");
+    next();
+
+
+});
 
 };
