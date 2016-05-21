@@ -48,8 +48,8 @@ function populateShoplist() {
                 listBuy = gotBack[i].listtobuy.split(",");
             } else continue;
 
-            var outerHtml = "<div class='col-xs-4 shopcard'><div class='card hoverable'><div class='card-content'>";
-            var text = "<h3>" + gotBack[i].recipetitle + "</h3><br>";
+            var outerHtml = "<div class='col-xs-4'><div class='card hoverable small'><div class='card-text'>";
+            var text = "<h6>" + gotBack[i].recipetitle + "</h6><br>";
 
             for (ii = 0; ii < listBuy.length; ii++) {
 
@@ -65,7 +65,7 @@ function populateShoplist() {
 
             }
 
-            var closingTags = "</div></div>";
+            var closingTags = "</div></div></div>";
             var costTotal = "<br>- - - - -<br><p>Total Cost: " + costAddup + "</p>";
             var htmlOut = outerHtml + text + costTotal + closingTags;
             currentShoplistHTML += htmlOut + "<br><hr><br>";
@@ -98,8 +98,8 @@ function populatePlan() {
 
 
         for (i in gotBack) {
-            var outerHtml = "<div class='col-xs-4 plancard'><div class='card hoverable'><div class='card-content'>";
-            var text = "<h3>" + gotBack[i].recipe_name + "</h3><br><h5>Designated Date: " + gotBack[i].date + "</h5><br>";
+            var outerHtml = "<div class='col-xs-4 plancard'><div class='card hoverable small'><div class='card-text'>";
+            var text = "<h6>" + gotBack[i].recipe_name + "</h6><br><h5>Designated Date: " + gotBack[i].date + "</h5><br>";
             var closingTags = "</div></div>";
             $(".eatThese").append(outerHtml + text + closingTags);
         }
