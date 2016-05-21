@@ -3,7 +3,7 @@ var express = require("express"),
     nodemailer = require('nodemailer'),
     path = require("path"),
     _ = require("lodash"),
-    key = 'WQFSAkYbqamshlMXWe0X3EnVkSmap13txkbjsna2ZL3tOG8BzJ',
+    key = require("../config/key"),
     bodyParser = require("body-parser"),
     myDB = require("../config/dbconnect");
 
