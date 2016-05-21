@@ -204,7 +204,7 @@
         listBuy = gotBack[i].listtobuy.split(",");
       } else continue;
 
-      var outerHtml = "<div class='col-xs-4'><div class='card hoverable'><div class='card-content'>";
+      var outerHtml = "<div class='col-xs-4 shopcard'><div class='card hoverable'><div class='card-content'>";
       var text ="<h3>"+ gotBack[i].recipetitle+"</h3><br>";
 
       for (ii=0; ii < listBuy.length; ii++){
@@ -254,7 +254,7 @@
 
 
     for (i in gotBack){
-      var outerHtml = "<div class='col-xs-4'><div class='card hoverable'><div class='card-content'>";
+      var outerHtml = "<div class='col-xs-4 plancard'><div class='card hoverable'><div class='card-content'>";
       var text ="<h3>"+ gotBack[i].recipe_name+"</h3><br><h5>Designated Date: "+gotBack[i].date+"</h5><br>";
       var closingTags = "</div></div>";
       $(".eatThese").append(outerHtml+text+closingTags);

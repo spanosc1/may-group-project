@@ -71,3 +71,18 @@ font-size: 15px;
     bottom: 50%; 
     left: 25%; }
 }
+
+/*these set the size of the cards/panels used for
+displaying shopping list and meal planner info*/
+
+.shopcard{
+
+    height: 300px;
+    overflow: auto;
+
+}
+
+.plancard {
+
+
+}

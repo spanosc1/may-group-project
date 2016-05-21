@@ -285,7 +285,6 @@ module.exports = function(app) {
 
     var transporter = nodemailer.createTransport('smtps://eathottrash%40gmail.com:duke3799@smtp.gmail.com');
 
-    req.params.emailadd="jagross66@gmail.com"
     console.log(req.body.list+"=list");
     var mailOptions = {
             from: '"Yourself" <eathottrash@gmail.com>', // sender address

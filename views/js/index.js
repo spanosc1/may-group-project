@@ -126,7 +126,7 @@ $(document).ready(function() {
                     if(response == null || response == undefined || response == 0)
                     {  
                          // got rid of 'pricebox' class 
-                        $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' id='yourPrice' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
+                        $("#recipeModal .modal-body").append("<form class='addPrice'><input type='text' name='price' id='pricebox' class='form-control'>Enter estimated purchase price:</input><input type='submit' class='form-control'</input></form>");
                         // ingredObj.price = prompt("Enter price for " + ingredObj.ingredient);
                     }
                     else
