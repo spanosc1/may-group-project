@@ -40,7 +40,6 @@ $(document).ready(function() {
             console.log(checkifUser);
 
             var useremail = $("#myemail").val().trim();
-            $("#myemail").val("");
 
             if (!checkifUser) { // Verify that user exists if checkbox NOT checked ... 
                 console.log(useremail);
@@ -70,13 +69,15 @@ $(document).ready(function() {
             } else { // Create user account if checkbox IS checked
 
                 $("#loginForm").submit();
-                sessionStorage.loggedIn = true;
-                sessionStorage.email = useremail;
+                // sessionStorage.loggedIn = true;
+                // sessionStorage.email = useremail;
                 $("#loginStatus").html("Welcome, " + useremail);
                 return false;
                 $("#loginModal").modal("hide");
+                userLogin();
 
             }
+            $("#myemail").val("");
         });
 
     }
