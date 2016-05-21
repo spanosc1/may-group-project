@@ -41,16 +41,13 @@ module.exports = function(app) {
 
         // weekstart must be formatted as mm-dd-yyyy
 
-        //TESTING PURPOSES ONLY ---
-        req.params.userid=1;
-        var weekstart = "04-10-2016";
-        // ----
+       
 
         // Searches for a one week period only, 
         // based on start date
                
-        var startDate = new Date(weekstart);
-        var endDate = new Date(weekstart);
+        var startDate = new Date(req.params.weekstart);
+        var endDate = new Date(req.params.weekstart);
 
         endDate.setDate(startDate.getDate()+6);
 
@@ -66,7 +63,7 @@ module.exports = function(app) {
                 }
             }
         }).then(function(response) {
-           console.log(response[0].recipe_name);
+           
            res.json(response); 
         });
     })

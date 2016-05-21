@@ -5,12 +5,18 @@ $('#myTab a').click(function(e) {
     $(this).tab('show');
 });
 
+$("#dayBeginning").change(function(){
+
+    var startdate = $("#dayBeginning").val();
+    populatePlan(startdate);
+
+
+})
 
 var currentShoplistHTML;
 var currentShoplistTEXT;
 
 populateShoplist();
-populatePlan();
 sendEmailButton();
 
 
@@ -81,13 +87,11 @@ function populateShoplist() {
 
 // populate planner tab with meal info for user
 
-function populatePlan() {
+function populatePlan(startDate) {
+    $(".eatThese").html("");
 
     var userId = sessionStorage.userId;
     // for testing purposes
-
-    var startDate = "5-23-2016";
-
 
     $.get("/planner/" + userId + "/" + startDate, function(response) {
 
@@ -95,7 +99,7 @@ function populatePlan() {
         // row in the table matching date and user id
         var gotBack = response;
 
-
+        alert(response);
 
         for (i in gotBack) {
             var outerHtml = "<div class='col-xs-4 plancard'><div class='card hoverable small'><div class='card-text'>";
