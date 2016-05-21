@@ -91,7 +91,7 @@ $(document).ready(function() {
         // Click listener, deals with ingredient price submission
 
         $(document).on("submit", ".addPrice", function() {
-            var theprice = $(".pricebox").val();
+            var theprice = $("#pricebox").val();
             totalShopCost += theprice;
             var listItem = currentItemName +"~"+theprice;
             listWithPrices.push(listItem);

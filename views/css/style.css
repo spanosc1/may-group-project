@@ -78,13 +78,13 @@ displaying shopping list and meal planner info*/
 .shopcard{
 
     height: 300px;
-    overflow: auto;
+ 
 
 }
 
 .plancard {
 
     height: 300px;
-    overflow: auto;
+
 
 }
