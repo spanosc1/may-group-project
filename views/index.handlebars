@@ -59,7 +59,7 @@
 
 <div class="col-xs-6">
     
-    <h6>What meal?</h6>
+    <h6>Which meal?</h6>
     <select data-placeholder="" class="chosen-select form-control" id="meal">
       
             <option value="0">Breakfast</option>
@@ -218,8 +218,7 @@
                 <img class="img-responsive" style="max-height: 180px;" src="https://spoonacular.com/recipeImages/{{this.image}}">
               </div>
               <div class="card-content" style="height: 175px;" data-recipeid={{this.id}} data-recipetitle="{{this.title}}">
-                  <h5><strong>Recipe Number {{@index}}</strong></h5>
-                <p>{{this.title}}</p>
+                  <h6><strong>{{this.title}}</strong></h6>
                 <p>Takes {{this.readyInMinutes}} minutes to make.</p>
               </div>
               <div class="card-action">

@@ -1,5 +1,10 @@
 // Activates tabs on click
 
+if (sessionStorage.email != undefined)
+         {
+        $("#loginStatus").html("Welcome, <style='font-weight:bold;'>" + sessionStorage.email);
+    }
+
 $('#myTab a').click(function(e) {
     e.preventDefault();
     $(this).tab('show');
@@ -19,6 +24,7 @@ var currentShoplistTEXT;
 populateShoplist();
 sendEmailButton();
 
+// === Send email via Nodemail upon button click ===
 
 function sendEmailButton() {
 
@@ -38,6 +44,10 @@ function sendEmailButton() {
 }
 
 
+// ==== Shopping List Tab: get data from controller, 
+// fill page with list / cards containing items
+// for user to purchase 
+
 function populateShoplist() {
 
     var userId = sessionStorage.userId; // for testing ONLY
@@ -54,7 +64,7 @@ function populateShoplist() {
                 listBuy = gotBack[i].listtobuy.split(",");
             } else continue;
 
-            var outerHtml = "<div class='col-xs-4'><div class='card hoverable small'><div class='card-text'>";
+            var outerHtml = "<div class='col-xs-6 col-md-4'><div class='card hoverable small'><div class='card-text'>";
             var text = "<h6>" + gotBack[i].recipetitle + "</h6><br>";
 
             for (ii = 0; ii < listBuy.length; ii++) {
@@ -99,11 +109,14 @@ function populatePlan(startDate) {
         // row in the table matching date and user id
         var gotBack = response;
 
-        alert(response);
-
         for (i in gotBack) {
-            var outerHtml = "<div class='col-xs-4 plancard'><div class='card hoverable small'><div class='card-text'>";
-            var text = "<h6>" + gotBack[i].recipe_name + "</h6><br><h5>Designated Date: " + gotBack[i].date + "</h5><br>";
+
+            var mealDate = new Date(gotBack[i].date).toDateString();
+
+            var outerHtml = "<div class='col-md-4 col-xs-12 plancard'><div class='card hoverable small'><div class='card-text'>";
+            var text = "<h4>" + mealDate+ "</h4><hr><h6>" + gotBack[i].recipe_name  + "</h6><br>";
+            text +="<h6>Ingredients Required: "+ gotBack[i].ingredients+"</h6>";
+
             var closingTags = "</div></div>";
             $(".eatThese").append(outerHtml + text + closingTags);
         }
